@@ -1,11 +1,11 @@
 package com.paulina.chatclient;
 
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
-/**
- * Created by pramos on 2/18/15.
- */
 @ParseClassName("Message")
 public class Message extends ParseObject {
     public String getUserId() {

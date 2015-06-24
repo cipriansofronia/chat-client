@@ -2,67 +2,67 @@
 <items version="2" >
 
     <item
-        jar="/Users/pramos/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="/Users/pramos/Desktop/google-image-search/ChatClient/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-284e9b1e52d4c976e13b70682bd950a5ff9a6f5c.jar" />
-    </item>
-    <item
-        jar="/Users/pramos/Desktop/google-image-search/ChatClient/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Users/pramos/Desktop/google-image-search/ChatClient/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-202ee3e33544100a09cd5eefeb9811208b5416e3.jar" />
-    </item>
-    <item
-        jar="/Users/pramos/Desktop/google-image-search/ChatClient/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="/Users/pramos/Desktop/google-image-search/ChatClient/app/build/intermediates/pre-dexed/debug/classes-93c43c83e89d0aceab862b9ed7fac4ed1233144d.jar" />
-    </item>
-    <item
-        jar="/Users/pramos/Desktop/google-image-search/ChatClient/app/libs/Parse-1.8.2.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="c2cb0bfe37cbefd855b6faa3c9a5be833aba7300">
-        <dex dex="/Users/pramos/Desktop/google-image-search/ChatClient/app/build/intermediates/pre-dexed/debug/Parse-1.8.2-bccb1d53ba5d5666d386553f7d3862ec9544670e.jar" />
-    </item>
-    <item
-        jar="/Users/pramos/Desktop/google-image-search/ChatClient/app/libs/bolts-android-1.1.4-javadoc.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="f5dd6492c539679411fa30818320b737c410158f">
-        <dex dex="/Users/pramos/Desktop/google-image-search/ChatClient/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-javadoc-6d7f7822cadd5361b050979dff5f0719b93e16eb.jar" />
-    </item>
-    <item
-        jar="/Users/pramos/Desktop/google-image-search/ChatClient/app/libs/bolts-android-1.1.4.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="129874135e6081269ace2312092031558865de12">
-        <dex dex="/Users/pramos/Desktop/google-image-search/ChatClient/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-f0f464fc29e5797e2123a563b67a173ab2bc740e.jar" />
-    </item>
-    <item
-        jar="/Users/pramos/Desktop/google-image-search/ChatClient/app/libs/ParseCrashReporting-1.8.2.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="ccf9e90414e7bb2cf09f4d7c77c42f70c690e118">
-        <dex dex="/Users/pramos/Desktop/google-image-search/ChatClient/app/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.8.2-b90fefe6b6c5f24f4d82c74e54abb1ea1be5416d.jar" />
-    </item>
-    <item
-        jar="/Users/pramos/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.0/7ff0e000d1e27e356567f56c92af3b8ab912636f/picasso-2.5.0.jar"
+        jar="/home/cipry/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.0/7ff0e000d1e27e356567f56c92af3b8ab912636f/picasso-2.5.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="7ff0e000d1e27e356567f56c92af3b8ab912636f">
-        <dex dex="/Users/pramos/Desktop/google-image-search/ChatClient/app/build/intermediates/pre-dexed/debug/picasso-2.5.0-7e05176c58cbbaa24cd727ed58df1799aff6af39.jar" />
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/picasso-2.5.0-c6ae9e91a1e418815e05284eebf49eb903b5fe81.jar" />
     </item>
     <item
-        jar="/Users/pramos/Desktop/google-image-search/ChatClient/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jar="/media/windows/install/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/Users/pramos/Desktop/google-image-search/ChatClient/app/build/intermediates/pre-dexed/debug/classes-f074e222d2ae4732e2fd56e149fc8fe0857859b4.jar" />
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-6c251ff9c1cb90a96417e1044d095d9cd2ff2ed8.jar" />
+    </item>
+    <item
+        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-5c043933ff2d14d49be815d269eef695564d45d1.jar" />
+    </item>
+    <item
+        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c6d79137693d494dee16372d3921f919eb724ced">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-434453dbd8fe9637eb3c951c61f059e1c3394810.jar" />
+    </item>
+    <item
+        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-333bc5e2dd97a25a663f1b7e60c5d9892a39a52f.jar" />
+    </item>
+    <item
+        jar="/media/windows/workspace/chat-client/app/libs/ParseCrashReporting-1.8.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="ccf9e90414e7bb2cf09f4d7c77c42f70c690e118">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.8.2-f1bbe5ee81903841768945abcfa2646004c665f7.jar" />
+    </item>
+    <item
+        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-670707c81acaf68aaf30f021d2c94ea7a4394468.jar" />
+    </item>
+    <item
+        jar="/media/windows/workspace/chat-client/app/libs/Parse-1.8.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c2cb0bfe37cbefd855b6faa3c9a5be833aba7300">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/Parse-1.8.2-82dbfa1f70500ec64b697edaf414e73a7e2b0d5f.jar" />
+    </item>
+    <item
+        jar="/home/cipry/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-572aadb3bab69119ea817baf7613686e590c40cd.jar" />
     </item>
 
 </items>

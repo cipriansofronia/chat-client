@@ -3,6 +3,8 @@ package com.paulina.chatclient;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
@@ -31,9 +34,12 @@ public class ChatActivity extends ActionBarActivity {
     private EditText etMessage;
     private Button btSend;
     private ListView lvChat;
+    private RecyclerView recyclerView;
+    private int initialSize = 0;
+
     private ArrayList<Message> mMessages;
     private ChatListAdapter mAdapter;
-    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 100;
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
 
@@ -97,26 +103,35 @@ public class ChatActivity extends ActionBarActivity {
     private void setupMessagePosting() {
         etMessage = (EditText) findViewById(R.id.etMessage);
         btSend = (Button) findViewById(R.id.btSend);
-        lvChat = (ListView) findViewById(R.id.lvChat);
+        recyclerView = (RecyclerView) findViewById(R.id.lvChat);
         mMessages = new ArrayList<Message>();
         mAdapter = new ChatListAdapter(ChatActivity.this, sUserId, mMessages);
-        lvChat.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+
         btSend.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                String body = etMessage.getText().toString();
-                // Use Message model to create new messages now
-                Message message = new Message();
-                message.setUserId(sUserId);
-                message.setBody(body);
-                message.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        receiveMessage();
-                    }
-                });
-                etMessage.setText("");
+                if (etMessage.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "Type some text!", Toast.LENGTH_SHORT).show();
+                } else {
+                    String body = etMessage.getText().toString();
+                    // Use Message model to create new messages now
+                    Message message = new Message();
+                    message.setUserId(sUserId);
+                    message.setBody(body);
+                    message.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            receiveMessage();
+                        }
+                    });
+                    etMessage.setText("");
+                }
             }
         });
     }
@@ -131,10 +146,10 @@ public class ChatActivity extends ActionBarActivity {
         query.findInBackground(new FindCallback<Message>() {
             public void done(List<Message> messages, ParseException e) { // returns list of messages
                 if (e == null) {
-                    mMessages.clear();
-                    mMessages.addAll(messages);
+                    if (mMessages != null) mMessages.clear();
+                    if (mMessages != null) mMessages.addAll(messages);
                     mAdapter.notifyDataSetChanged();
-                    lvChat.invalidate(); // force refresh
+                    recyclerView.invalidate(); // TODO force refresh ??
                 } else {
                     Log.d("message", "Error: " + e.getMessage());
                 }
@@ -153,6 +168,10 @@ public class ChatActivity extends ActionBarActivity {
 
     private void refreshMessages() {
         receiveMessage();
+        if (initialSize < mMessages.size()) {
+            initialSize = mMessages.size();
+            recyclerView.smoothScrollToPosition(mAdapter.getItemCount());
+        }
     }
 
 }
