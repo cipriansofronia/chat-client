@@ -10,9 +10,12 @@
     <string name="send">Send</string>
     <string name="profile_me">My Profile Pic</string>
     <string name="profile_other">Other profile pic</string>
-    <string name="no_items">No messages.. Start typing...</string>
-    <string name="no_internet">Connect to internet...</string>
+    <string name="no_items">No messages&#8230; Start typing&#8230;</string>
+    <string name="no_internet">Connect to internet&#8230;</string>
     <string name="action_logout">Log Out!</string>
     <string name="action_login">Log In!</string>
+    <string name="action_users">Users</string>
+    <string name="title_activity_users">Users from this chat</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

@@ -14,20 +14,22 @@
       IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
       to match your app's package name + ".permission.C2D_MESSAGE".
     -->
-    <permission android:protectionLevel="signature"
-        android:name="ro.cipry.chat.permission.C2D_MESSAGE" />
+    <permission
+        android:name="ro.cipry.chat.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="ro.cipry.chat.permission.C2D_MESSAGE" />
 
     <application
+        android:name=".ChatApplication"
         android:allowBackup="true"
-        android:name="ro.cipry.chat.ChatApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="ro.cipry.chat.ChatActivity"
+            android:name=".ChatActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,49 +38,55 @@
         </activity>
 
         <service android:name="com.parse.PushService" />
-        <receiver android:name="com.parse.ParseBroadcastReceiver">
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.ParsePushBroadcastReceiver"
-            android:exported="false">dd
+        <receiver
+            android:name="com.parse.ParsePushBroadcastReceiver"
+            android:exported="false" >
+dd
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
                 <action android:name="com.parse.push.intent.DELETE" />
                 <action android:name="com.parse.push.intent.OPEN" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <!--
-                  IMPORTANT: Change "com.parse.starter" to match your app's package name.
-                -->
+<!--                   IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
                 <category android:name="ro.cipry.chat" />
             </intent-filter>
         </receiver>
 
         <!-- replace @drawable/push_icon with your push icon identifier -->
-        <!--<meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/push_icon"/>-->
+        <!-- <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/push_icon"/> -->
 
         <activity
             android:name="com.parse.ui.ParseLoginActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop" >
+
             <!-- For more options, see https://www.parse.com/docs/android_guide#ui-login -->
             <meta-data
                 android:name="com.parse.ui.ParseLoginActivity.PARSE_LOGIN_ENABLED"
-                android:value="true"/>
+                android:value="true" />
             <meta-data
                 android:name="com.parse.ui.ParseLoginActivity.PARSE_LOGIN_EMAIL_AS_USERNAME"
-                android:value="true"/>
+                android:value="true" />
         </activity>
-
+        <activity
+            android:name=".UsersActivity"
+            android:label="@string/title_activity_users" >
+        </activity>
     </application>
 
 </manifest>

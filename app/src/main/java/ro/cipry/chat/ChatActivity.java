@@ -107,16 +107,30 @@ public class ChatActivity extends ActionBarActivity {
 
     @Override
     protected void onPause() {
-        ParsePush.subscribeInBackground("chat", new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.d("onPause", "successfully subscribed to chat.");
-                } else {
-                    Log.e("com.parse.push", "failed to subscribe for chat", e);
+        if (!ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) {
+            ParsePush.subscribeInBackground("chat", new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.d("onPause", "successfully subscribed to chat.");
+                    } else {
+                        Log.e("com.parse.push", "failed to subscribe for chat", e);
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            ParsePush.unsubscribeInBackground("chat", new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.d("onPause", "successfully unsubscribed to chat.");
+                    } else {
+                        Log.e("com.parse.push", "failed to unsubscribe for chat", e);
+                    }
+                }
+            });
+        }
+
         super.onPause();
     }
 
@@ -270,6 +284,12 @@ public class ChatActivity extends ActionBarActivity {
             return true;
         }
 
+        if (id == R.id.action_users) {
+            Intent intent = new Intent(this, UsersActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         if (id == R.id.action_login) {
             ParseLoginBuilder builder = new ParseLoginBuilder(this);
             startActivityForResult(builder.build(), LOGIN_ACTIVITY_CODE);
@@ -290,8 +310,8 @@ public class ChatActivity extends ActionBarActivity {
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if ((ni != null) && (ni.isConnected())) {
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChatActivity.this);
-            alertDialog.setTitle("UserName");
-            alertDialog.setMessage("Enter new user name: ");
+            alertDialog.setTitle("New name!");
+            alertDialog.setMessage("Enter new name: ");
 
             final EditText input = new EditText(ChatActivity.this);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
