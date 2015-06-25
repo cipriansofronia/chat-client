@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="parse_app_id">B4nKBopgxpQg5K6EzNwP6RXCYdSj5RH05Phx4xR2</string>
+    <string name="parse_client_key">mAereCHU75GbQwnTYivGvgOt7A3UKF1niXmeRwO0</string>
 
     <string name="app_name">Group Chat</string>
     <string name="hello_world">Hello world!</string>
@@ -10,5 +12,7 @@
     <string name="profile_other">Other profile pic</string>
     <string name="no_items">No messages.. Start typing...</string>
     <string name="no_internet">Connect to internet...</string>
+    <string name="action_logout">Log Out!</string>
+    <string name="action_login">Log In!</string>
 
 </resources>

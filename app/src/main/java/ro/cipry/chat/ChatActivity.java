@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -28,11 +29,14 @@ import com.parse.LogInCallback;
 import com.parse.ParseACL;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.parse.SendCallback;
+import com.parse.ui.ParseLoginBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,6 +46,7 @@ import java.util.List;
 public class ChatActivity extends ActionBarActivity {
 
     private static final String TAG = ChatActivity.class.getName();
+    private static final int LOGIN_ACTIVITY_CODE = 100;
     private static String sUserId;
     public static final String USER_ID_KEY = "userId";
     private EditText etMessage;
@@ -122,9 +127,8 @@ public class ChatActivity extends ActionBarActivity {
         setupMessagePosting();
     }
 
-    // Create an anonymous user using ParseAnonymousUtils and set sUserId
     private void login() {
-        ParseAnonymousUtils.logIn(new LogInCallback() {
+        /*ParseAnonymousUtils.logIn(new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
                 if (e != null) {
@@ -133,7 +137,23 @@ public class ChatActivity extends ActionBarActivity {
                     startWithCurrentUser();
                 }
             }
-        });
+        });*/
+
+        ParseLoginBuilder builder = new ParseLoginBuilder(this);
+        startActivityForResult(builder.build(), LOGIN_ACTIVITY_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == LOGIN_ACTIVITY_CODE) {
+                startWithCurrentUser();
+            }
+        } else {
+            finish();
+        }
     }
 
     // Setup message field and posting
@@ -156,12 +176,12 @@ public class ChatActivity extends ActionBarActivity {
                 if (etMessage.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "Type some text!", Toast.LENGTH_SHORT).show();
                 } else {
-                    String body = etMessage.getText().toString();
+                    final String body = etMessage.getText().toString();
                     // Use Message model to create new messages now
                     Message message = new Message();
                     message.setUserId(sUserId);
                     message.setBody(body);
-                    message.setUserName(currentUser.getUsername());
+                    message.setUserName(currentUser.getString("name"));
                     message.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -172,9 +192,18 @@ public class ChatActivity extends ActionBarActivity {
                     etMessage.setText("");
 
                     ParsePush push = new ParsePush();
+                    push.setMessage(currentUser.getString("name") + ": " + body);
                     push.setChannel("chat");
-                    push.setMessage(currentUser.getUsername() + ": " + body);
-                    push.sendInBackground();
+                    push.sendInBackground(new SendCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                Log.d("GroupChat", currentUser.getString("name") + ": " + body);
+                            } else {
+                                Log.e("GroupChat", "Message not sent: " + e.getMessage());
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -234,7 +263,19 @@ public class ChatActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_logout) {
+            ParseUser.logOut();
+            // ParseAnonymousUtils.logIn(null);
+            login();
+            return true;
+        }
+
+        if (id == R.id.action_login) {
+            ParseLoginBuilder builder = new ParseLoginBuilder(this);
+            startActivityForResult(builder.build(), LOGIN_ACTIVITY_CODE);
+            return true;
+        }
+
         if (id == R.id.action_updateName) {
             changeUserName();
             return true;
@@ -311,7 +352,7 @@ public class ChatActivity extends ActionBarActivity {
             acl.setWriteAccess(ParseUser.getCurrentUser(), true);
             point.setACL(acl); */
 
-            ParseUser.getCurrentUser().setUsername(newName);
+            ParseUser.getCurrentUser().put("name", newName);
 
             // Save
             ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {

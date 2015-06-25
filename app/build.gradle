@@ -20,9 +20,15 @@ android {
 }
 
 dependencies {
+    // Module dependency on ParseLoginUI library sources
+    compile project(':ParseLoginUI')
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.parse.bolts:bolts-android:1.2.0'
     compile 'com.android.support:recyclerview-v7:22.1.1'
     compile 'com.squareup.picasso:picasso:2.5.0'
+
+    // Uncomment if using Facebook Login (optional Maven dependency)
+    // compile 'com.facebook.android:facebook-android-sdk:4.0.1'
 }

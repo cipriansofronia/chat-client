@@ -13,7 +13,7 @@ public class ChatApplication extends Application {
         super.onCreate();
 
         // Add your initialization code here
-        Parse.initialize(this, "B4nKBopgxpQg5K6EzNwP6RXCYdSj5RH05Phx4xR2", "mAereCHU75GbQwnTYivGvgOt7A3UKF1niXmeRwO0");
+        Parse.initialize(this, getString(R.string.parse_app_id), getString(R.string.parse_client_key));
 
         // Register your parse models here
         ParseObject.registerSubclass(Message.class);
