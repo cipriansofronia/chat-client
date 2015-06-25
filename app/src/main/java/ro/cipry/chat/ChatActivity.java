@@ -63,24 +63,26 @@ public class ChatActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        LinearLayout noInternetLayout = (LinearLayout) findViewById(R.id.no_internet_view);
+        LinearLayout noMessagesLayout = (LinearLayout) findViewById(R.id.no_messages_view);
+
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if ((ni != null) && (ni.isConnected())) {
-            //
+            // User login
+            if (!ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) { // start with existing user
+                Log.i("GroupChat", "User is defined: " + ParseUser.getCurrentUser());
+                startWithCurrentUser();
+            } else { // If not logged in, login as a new anonymous user
+                Log.i("GroupChat", "User is NOT defined! ");
+                login();
+            }
+
+            // Run the runnable object defined every 100ms
+            handler.postDelayed(runnable, 500);
         } else {
             Toast.makeText(getApplicationContext(), "Connect to internet!", Toast.LENGTH_SHORT).show();
         }
-
-        // User login
-        if (!ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) { // start with existing user
-            Log.i("GroupChat", "User is defined: " + ParseUser.getCurrentUser());
-            startWithCurrentUser();
-        } else { // If not logged in, login as a new anonymous user
-            Log.i("GroupChat", "User is NOT defined! ");
-            login();
-        }
-        // Run the runnable object defined every 100ms
-        handler.postDelayed(runnable, 500);
     }
 
     @Override
@@ -190,8 +192,8 @@ public class ChatActivity extends ActionBarActivity {
                 if (e == null) {
                     if (mMessages != null) mMessages.clear();
                     if (mMessages != null) mMessages.addAll(messages);
-                    mAdapter.notifyDataSetChanged();
-                    recyclerView.invalidate(); // TODO force refresh ??
+                    if (mAdapter != null) mAdapter.notifyDataSetChanged();
+                    if (recyclerView != null) recyclerView.invalidate();
                 } else {
                     Log.d("message", "Error: " + e.getMessage());
                 }
@@ -242,40 +244,47 @@ public class ChatActivity extends ActionBarActivity {
     }
 
     private void changeUserName() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChatActivity.this);
-        alertDialog.setTitle("UserName");
-        alertDialog.setMessage("Enter new user name: ");
 
-        final EditText input = new EditText(ChatActivity.this);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        input.setLayoutParams(lp);
-        alertDialog.setView(input);
-        // alertDialog.setIcon(R.drawable.key);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if ((ni != null) && (ni.isConnected())) {
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChatActivity.this);
+            alertDialog.setTitle("UserName");
+            alertDialog.setMessage("Enter new user name: ");
 
-        alertDialog.setPositiveButton("YES",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        String newUserName = input.getText().toString();
-                        if (newUserName.equals("")) {
-                            Toast.makeText(getApplicationContext(),
-                                    "Type an user name!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            newName = newUserName;
-                            new updateUserName().execute((Void[]) null);
+            final EditText input = new EditText(ChatActivity.this);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            input.setLayoutParams(lp);
+            alertDialog.setView(input);
+            // alertDialog.setIcon(R.drawable.key);
+
+            alertDialog.setPositiveButton("YES",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            String newUserName = input.getText().toString();
+                            if (newUserName.equals("")) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Type an user name!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                newName = newUserName;
+                                new updateUserName().execute((Void[]) null);
+                            }
                         }
-                    }
-                });
+                    });
 
-        alertDialog.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+            alertDialog.setNegativeButton("Cancel",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
 
-        alertDialog.show();
+            alertDialog.show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Connect to internet!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private class updateUserName extends AsyncTask<Void,Void,Void > {

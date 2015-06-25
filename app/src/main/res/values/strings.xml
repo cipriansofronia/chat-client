@@ -8,5 +8,7 @@
     <string name="send">Send</string>
     <string name="profile_me">My Profile Pic</string>
     <string name="profile_other">Other profile pic</string>
+    <string name="no_items">No messages.. Start typing...</string>
+    <string name="no_internet">Connect to internet...</string>
 
 </resources>
