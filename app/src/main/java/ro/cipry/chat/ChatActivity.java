@@ -19,6 +19,7 @@ import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -56,6 +57,36 @@ public class ChatActivity extends ActionBarActivity {
         }
         // Run the runnable object defined every 100ms
         handler.postDelayed(runnable, 100);
+    }
+
+    @Override
+    protected void onResume() {
+        ParsePush.unsubscribeInBackground("chat", new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d("onResume", "successfully unsubscribed to chat.");
+                } else {
+                    Log.e("com.parse.push", "failed to unsubscribe for chat", e);
+                }
+            }
+        });
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        ParsePush.subscribeInBackground("chat", new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    Log.d("onPause", "successfully subscribed to chat.");
+                } else {
+                    Log.e("com.parse.push", "failed to subscribe for chat", e);
+                }
+            }
+        });
+        super.onPause();
     }
 
     // Get the userId from the cached currentUser object
@@ -136,6 +167,11 @@ public class ChatActivity extends ActionBarActivity {
 
                     });
                     etMessage.setText("");
+
+                    ParsePush push = new ParsePush();
+                    push.setChannel("chat");
+                    push.setMessage(ParseUser.getCurrentUser().getString("name") + ": " + body);
+                    push.sendInBackground();
                 }
             }
         });
