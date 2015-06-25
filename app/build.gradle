@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "ro.cipry.chat"
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 21
         versionCode 2
         versionName "2.0"
@@ -21,8 +21,8 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.parse.bolts:bolts-android:1.+'
-    compile 'com.android.support:recyclerview-v7:+'
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.parse.bolts:bolts-android:1.2.0'
+    compile 'com.android.support:recyclerview-v7:22.1.1'
     compile 'com.squareup.picasso:picasso:2.5.0'
 }

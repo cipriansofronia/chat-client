@@ -3,7 +3,7 @@
 
     <string name="app_name">Group Chat</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_change">Change name!</string>
     <string name="message_hint">Type something&#8230;</string>
     <string name="send">Send</string>
     <string name="profile_me">My Profile Pic</string>

@@ -9,32 +9,39 @@
         <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/picasso-2.5.0-c6ae9e91a1e418815e05284eebf49eb903b5fe81.jar" />
     </item>
     <item
-        jar="/media/windows/install/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
+        jar="/media/windows/install/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-6c251ff9c1cb90a96417e1044d095d9cd2ff2ed8.jar" />
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-2aecbc9e1381b181bda51733306d39c89e23fce1.jar" />
     </item>
     <item
-        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.1.1/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-5c043933ff2d14d49be815d269eef695564d45d1.jar" />
+        sha1="e0b0c35d02308b270015a74cada4887e2e49b889">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-fdba173085e35ce5941f3ebd50cae49c0dd29658.jar" />
     </item>
     <item
-        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.0.0/classes.jar"
+        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/libs/internal_impl-22.2.0.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="c6d79137693d494dee16372d3921f919eb724ced">
-        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-434453dbd8fe9637eb3c951c61f059e1c3394810.jar" />
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-4d9810e823f64f35af173bcbd174752ffdb881e5.jar" />
     </item>
     <item
-        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/classes.jar"
+        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-333bc5e2dd97a25a663f1b7e60c5d9892a39a52f.jar" />
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-a6070e5a1d9fb9415a793bbb22b1aa4632bc30e2.jar" />
+    </item>
+    <item
+        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-fb9906b7a9a2d6813cc5edc90b8170cd5e0ca7f9.jar" />
     </item>
     <item
         jar="/media/windows/workspace/chat-client/app/libs/ParseCrashReporting-1.8.2.jar"
@@ -42,13 +49,6 @@
         revision="21.1.2"
         sha1="ccf9e90414e7bb2cf09f4d7c77c42f70c690e118">
         <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.8.2-f1bbe5ee81903841768945abcfa2646004c665f7.jar" />
-    </item>
-    <item
-        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-670707c81acaf68aaf30f021d2c94ea7a4394468.jar" />
     </item>
     <item
         jar="/media/windows/workspace/chat-client/app/libs/Parse-1.8.2.jar"

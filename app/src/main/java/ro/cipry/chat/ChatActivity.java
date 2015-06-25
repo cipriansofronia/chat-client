@@ -1,5 +1,12 @@
 package ro.cipry.chat;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -9,21 +16,25 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
+import com.parse.ParseACL;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,25 +49,38 @@ public class ChatActivity extends ActionBarActivity {
     private ListView lvChat;
     private RecyclerView recyclerView;
     private int initialSize = 0;
+    private String newName = "";
 
     private ArrayList<Message> mMessages = null;
     private ChatListAdapter mAdapter;
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
+    private ParseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if ((ni != null) && (ni.isConnected())) {
+            //
+        } else {
+            Toast.makeText(getApplicationContext(), "Connect to internet!", Toast.LENGTH_SHORT).show();
+        }
+
         // User login
-        if (ParseUser.getCurrentUser() != null) { // start with existing user
+        if (!ParseAnonymousUtils.isLinked(ParseUser.getCurrentUser())) { // start with existing user
+            Log.i("GroupChat", "User is defined: " + ParseUser.getCurrentUser());
             startWithCurrentUser();
         } else { // If not logged in, login as a new anonymous user
+            Log.i("GroupChat", "User is NOT defined! ");
             login();
         }
         // Run the runnable object defined every 100ms
-        handler.postDelayed(runnable, 100);
+        handler.postDelayed(runnable, 500);
     }
 
     @Override
@@ -92,6 +116,7 @@ public class ChatActivity extends ActionBarActivity {
     // Get the userId from the cached currentUser object
     private void startWithCurrentUser() {
         sUserId = ParseUser.getCurrentUser().getObjectId();
+        currentUser = ParseUser.getCurrentUser();
         setupMessagePosting();
     }
 
@@ -109,38 +134,13 @@ public class ChatActivity extends ActionBarActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_chat, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     // Setup message field and posting
     private void setupMessagePosting() {
         etMessage = (EditText) findViewById(R.id.etMessage);
         btSend = (ImageButton) findViewById(R.id.btSend);
 
         recyclerView = (RecyclerView) findViewById(R.id.lvChat);
-
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
 
         mMessages = new ArrayList<Message>();
         mAdapter = new ChatListAdapter(ChatActivity.this, sUserId, mMessages);
@@ -159,7 +159,7 @@ public class ChatActivity extends ActionBarActivity {
                     Message message = new Message();
                     message.setUserId(sUserId);
                     message.setBody(body);
-                    message.setUserName(ParseUser.getCurrentUser().getUsername());
+                    message.setUserName(currentUser.getUsername());
                     message.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -171,7 +171,7 @@ public class ChatActivity extends ActionBarActivity {
 
                     ParsePush push = new ParsePush();
                     push.setChannel("chat");
-                    push.setMessage(ParseUser.getCurrentUser().getUsername() + ": " + body);
+                    push.setMessage(currentUser.getUsername() + ": " + body);
                     push.sendInBackground();
                 }
             }
@@ -215,6 +215,146 @@ public class ChatActivity extends ActionBarActivity {
                 initialSize = mAdapter.getItemCount();
                 recyclerView.smoothScrollToPosition(mAdapter.getItemCount());
             }
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_chat, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_updateName) {
+            changeUserName();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void changeUserName() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChatActivity.this);
+        alertDialog.setTitle("UserName");
+        alertDialog.setMessage("Enter new user name: ");
+
+        final EditText input = new EditText(ChatActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        input.setLayoutParams(lp);
+        alertDialog.setView(input);
+        // alertDialog.setIcon(R.drawable.key);
+
+        alertDialog.setPositiveButton("YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String newUserName = input.getText().toString();
+                        if (newUserName.equals("")) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Type an user name!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            newName = newUserName;
+                            new updateUserName().execute((Void[]) null);
+                        }
+                    }
+                });
+
+        alertDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+    }
+
+    private class updateUserName extends AsyncTask<Void,Void,Void > {
+        ProgressDialog dialog;
+        @Override
+        protected void onPreExecute() {
+            dialog = new ProgressDialog(ChatActivity.this);
+            dialog.setMessage("Updating...");
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            /* // Create a pointer to an object of class Point with objectId dlkj83d
+            ParseObject point = ParseObject.createWithoutData("ParseUser", ParseUser.getCurrentUser().getObjectId());
+
+            // Set a new value on quantity
+            point.put("username", newName);
+            ParseACL acl = new ParseACL();
+            acl.setReadAccess(ParseUser.getCurrentUser(), true);
+            acl.setWriteAccess(ParseUser.getCurrentUser(), true);
+            point.setACL(acl); */
+
+            ParseUser.getCurrentUser().setUsername(newName);
+
+            // Save
+            ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+                public void done(ParseException e) {
+                    if (e == null) {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),
+                                        "Success!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(getApplicationContext(),
+                                        "Failed!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        Log.e("UpdateUser", e.getMessage());
+                    }
+                }
+            });
+
+            ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+
+            query.whereEqualTo("userId", currentUser.getObjectId());
+            query.findInBackground(new FindCallback<Message>() {
+                @Override
+                public void done(List<Message> messages, ParseException e) {
+                    if (e == null) {
+                        for (final Message msg : messages) {
+                            msg.setUserName(newName);
+                            msg.saveEventually();
+                        }
+                    } else {
+                        Log.e("SaveDataBeforeLogin", "Error: " + e.getMessage());
+                    }
+                }
+            });
+
+            try {
+                currentUser = ParseUser.getCurrentUser().fetch();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(Void result) {
+            dialog.dismiss();
+            refreshMessages();
         }
     }
 
