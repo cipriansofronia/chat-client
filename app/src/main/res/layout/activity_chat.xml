@@ -74,8 +74,10 @@
             android:background="@drawable/background"
             android:hint="@string/message_hint"
             android:inputType="textShortMessage"
+            android:textColorHint="@color/abc_primary_text_material_light"
             android:padding="5dp"
             android:textSize="14sp"
+            android:textColor="@color/abc_primary_text_material_light"
             android:imeOptions="actionSend"
             android:layout_alignTop="@+id/btSend" />
 
