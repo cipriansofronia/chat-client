@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.ParseException;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigInteger;
@@ -91,8 +92,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Messag
                 .into(profileView);
 
         messageHolder.body.setText(message.getBody());
-        messageHolder.nameLeft.setText("Dan");
-        messageHolder.nameRight.setText("Dan");
+        messageHolder.nameLeft.setText(message.getUserName());
+        messageHolder.nameRight.setText(message.getUserName());
     }
 
     @Override

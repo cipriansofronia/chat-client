@@ -159,6 +159,7 @@ public class ChatActivity extends ActionBarActivity {
                     Message message = new Message();
                     message.setUserId(sUserId);
                     message.setBody(body);
+                    message.setUserName(ParseUser.getCurrentUser().getUsername());
                     message.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -170,7 +171,7 @@ public class ChatActivity extends ActionBarActivity {
 
                     ParsePush push = new ParsePush();
                     push.setChannel("chat");
-                    push.setMessage(ParseUser.getCurrentUser().getString("name") + ": " + body);
+                    push.setMessage(ParseUser.getCurrentUser().getUsername() + ": " + body);
                     push.sendInBackground();
                 }
             }
@@ -203,7 +204,7 @@ public class ChatActivity extends ActionBarActivity {
         @Override
         public void run() {
             refreshMessages();
-            handler.postDelayed(this, 100);
+            handler.postDelayed(this, 500);
         }
     };
 
