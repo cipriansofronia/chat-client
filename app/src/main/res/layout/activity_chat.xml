@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="#ffffff"
+    android:background="#687586"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lvChat"
         android:transcriptMode="alwaysScroll"
@@ -12,36 +13,46 @@
         android:layout_alignParentRight="true"
         android:layout_above="@+id/llSend"
         android:layout_width="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_height="match_parent" />
+
     <RelativeLayout
         android:id="@+id/llSend"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:background="#ffffff"
-        android:paddingTop="5dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
+        android:background="#515D6D"
+        android:padding="5dp"
         android:layout_height="wrap_content" >
+
         <EditText
             android:id="@+id/etMessage"
             android:layout_toLeftOf="@+id/btSend"
-            android:layout_alignBottom="@+id/btSend"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@+id/btSend"
+            android:background="@drawable/background"
             android:hint="@string/message_hint"
             android:inputType="textShortMessage"
-            android:imeOptions="actionSend"/>
-        <Button
+            android:padding="5dp"
+            android:textSize="14sp"
+            android:imeOptions="actionSend"
+            android:layout_alignTop="@+id/btSend" />
+
+        <ImageButton
             android:id="@+id/btSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|right"
-            android:paddingRight="10dp"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
             android:layout_alignParentRight="true"
-            android:text="@string/send"
+            android:src="@drawable/send"
             android:textSize="18sp" >
-        </Button>
+        </ImageButton>
+
     </RelativeLayout>
+
 </RelativeLayout>

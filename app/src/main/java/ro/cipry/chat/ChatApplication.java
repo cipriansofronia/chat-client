@@ -1,4 +1,4 @@
-package com.paulina.chatclient;
+package ro.cipry.chat;
 
 import android.app.Application;
 

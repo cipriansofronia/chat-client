@@ -1,13 +1,17 @@
-package com.paulina.chatclient;
+package ro.cipry.chat;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Path;
+import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -25,45 +29,11 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Messag
     List<Message> data = Collections.emptyList();
 
     public ChatListAdapter(Context context, String userId, List<Message> messages) {
-        //super(context, 0, messages);
         this.context = context;
         this.mUserId = userId;
         inflater = LayoutInflater.from(context);
         this.data = messages;
     }
-
-    /*@Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).
-                    inflate(R.layout.chat_item, parent, false);
-            final ViewHolder holder = new ViewHolder();
-            holder.imageLeft = (ImageView)convertView.findViewById(R.id.ivProfileLeft);
-            holder.imageRight = (ImageView)convertView.findViewById(R.id.ivProfileRight);
-            holder.body = (TextView)convertView.findViewById(R.id.tvBody);
-            convertView.setTag(holder);
-        }
-        final Message message = (Message)getItem(position);
-        final ViewHolder holder = (ViewHolder)convertView.getTag();
-        final boolean isMe = message.getUserId().equals(mUserId);
-        // Show-hide image based on the logged-in user.
-        // Display the profile image to the right for our user, left for other users.
-        if (isMe) {
-            holder.imageRight.setVisibility(View.VISIBLE);
-            holder.imageLeft.setVisibility(View.GONE);
-            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-        } else {
-            holder.imageLeft.setVisibility(View.VISIBLE);
-            holder.imageRight.setVisibility(View.GONE);
-            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        }
-        final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-        Picasso.with(getContext())
-                .load(getProfileUrl(message.getUserId()))
-                .into(profileView);
-        holder.body.setText(message.getBody());
-        return convertView;
-    }*/
 
     // Create a gravatar image based on the hash value obtained from userId
     private static String getProfileUrl(final String userId) {
@@ -95,18 +65,34 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Messag
         if (isMe) {
             messageHolder.imgRight.setVisibility(View.VISIBLE);
             messageHolder.imgLeft.setVisibility(View.GONE);
+            messageHolder.nameLeft.setVisibility(View.GONE);
+            messageHolder.nameRight.setVisibility(View.VISIBLE);
             messageHolder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+            RelativeLayout.LayoutParams params =
+                    (RelativeLayout.LayoutParams)messageHolder.body.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 1);
+            messageHolder.body.setLayoutParams(params);
         } else {
             messageHolder.imgLeft.setVisibility(View.VISIBLE);
             messageHolder.imgRight.setVisibility(View.GONE);
+            messageHolder.nameLeft.setVisibility(View.VISIBLE);
+            messageHolder.nameRight.setVisibility(View.GONE);
             messageHolder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            RelativeLayout.LayoutParams params =
+                    (RelativeLayout.LayoutParams)messageHolder.body.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 0);
+            messageHolder.body.setLayoutParams(params);
+
         }
         final ImageView profileView = isMe ? messageHolder.imgRight : messageHolder.imgLeft;
         Picasso.with(context)
                 .load(getProfileUrl(message.getUserId()))
+                .transform(new CircleTransform())
                 .into(profileView);
 
         messageHolder.body.setText(message.getBody());
+        messageHolder.nameLeft.setText("Dan");
+        messageHolder.nameRight.setText("Dan");
     }
 
     @Override
@@ -114,23 +100,20 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Messag
         return data.size();
     }
 
-    /*final class ViewHolder {
-
-        public ImageView imageLeft;
-        public ImageView imageRight;
-        public TextView body;
-    }*/
-
     public static class MessageHolder extends RecyclerView.ViewHolder {
 
         private ImageView imgLeft;
         private ImageView imgRight;
+        private TextView nameLeft;
+        private TextView nameRight;
         private TextView body;
 
         public MessageHolder(View itemView) {
             super(itemView);
             imgLeft = (ImageView) itemView.findViewById(R.id.ivProfileLeft);
             imgRight = (ImageView) itemView.findViewById(R.id.ivProfileRight);
+            nameLeft = (TextView) itemView.findViewById(R.id.numeLeft);
+            nameRight = (TextView) itemView.findViewById(R.id.numeRight);
             body = (TextView) itemView.findViewById(R.id.tvBody);
         }
     }

@@ -1,4 +1,4 @@
-package com.paulina.chatclient;
+package ro.cipry.chat;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,14 +33,14 @@ public class ChatActivity extends ActionBarActivity {
     private static String sUserId;
     public static final String USER_ID_KEY = "userId";
     private EditText etMessage;
-    private Button btSend;
+    private ImageButton btSend;
     private ListView lvChat;
     private RecyclerView recyclerView;
     private int initialSize = 0;
 
-    private ArrayList<Message> mMessages;
+    private ArrayList<Message> mMessages = null;
     private ChatListAdapter mAdapter;
-    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 100;
+    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
 
@@ -102,15 +103,18 @@ public class ChatActivity extends ActionBarActivity {
     // Setup message field and posting
     private void setupMessagePosting() {
         etMessage = (EditText) findViewById(R.id.etMessage);
-        btSend = (Button) findViewById(R.id.btSend);
+        btSend = (ImageButton) findViewById(R.id.btSend);
+
         recyclerView = (RecyclerView) findViewById(R.id.lvChat);
-        mMessages = new ArrayList<Message>();
-        mAdapter = new ChatListAdapter(ChatActivity.this, sUserId, mMessages);
-        recyclerView.setAdapter(mAdapter);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+
+        mMessages = new ArrayList<Message>();
+        mAdapter = new ChatListAdapter(ChatActivity.this, sUserId, mMessages);
+
+        recyclerView.setAdapter(mAdapter);
 
         btSend.setOnClickListener(new View.OnClickListener() {
 
@@ -129,6 +133,7 @@ public class ChatActivity extends ActionBarActivity {
                         public void done(ParseException e) {
                             receiveMessage();
                         }
+
                     });
                     etMessage.setText("");
                 }
@@ -140,7 +145,7 @@ public class ChatActivity extends ActionBarActivity {
     private void receiveMessage() {
         // Construct query to execute
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class); // tells Parse what type of object you want to query
-        query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
+        // query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
         query.orderByAscending("createdAt");
         // Execute query for messages asynchronously
         query.findInBackground(new FindCallback<Message>() {
@@ -168,9 +173,11 @@ public class ChatActivity extends ActionBarActivity {
 
     private void refreshMessages() {
         receiveMessage();
-        if (initialSize < mMessages.size()) {
-            initialSize = mMessages.size();
-            recyclerView.smoothScrollToPosition(mAdapter.getItemCount());
+        if (mAdapter != null) {
+            if (initialSize < mAdapter.getItemCount()) {
+                initialSize = mAdapter.getItemCount();
+                recyclerView.smoothScrollToPosition(mAdapter.getItemCount());
+            }
         }
     }
 

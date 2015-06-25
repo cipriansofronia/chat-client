@@ -1,7 +1,4 @@
-package com.paulina.chatclient;
-
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+package ro.cipry.chat;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
