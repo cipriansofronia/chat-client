@@ -40,7 +40,10 @@ import com.parse.ui.ParseLoginBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 
 public class ChatActivity extends ActionBarActivity {
@@ -53,12 +56,13 @@ public class ChatActivity extends ActionBarActivity {
     private ImageButton btSend;
     private ListView lvChat;
     private RecyclerView recyclerView;
-    private int initialSize = 0;
+    private String initialObjId = "";
     private String newName = "";
 
     private ArrayList<Message> mMessages = null;
     private ChatListAdapter mAdapter;
-    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 40;
+    private int skipPagination = 0;
     // Create a handler which can run code periodically
     private Handler handler = new Handler();
     private ParseUser currentUser;
@@ -225,26 +229,32 @@ public class ChatActivity extends ActionBarActivity {
 
     // Query messages from Parse so we can load them into the chat adapter
     private void receiveMessage() {
-        // Construct query to execute
+        // TODO clear prev notifications
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class); // tells Parse what type of object you want to query
-        // query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.orderByAscending("createdAt");
-        // Execute query for messages asynchronously
+        query.orderByDescending("createdAt");
+        query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
         query.findInBackground(new FindCallback<Message>() {
             public void done(List<Message> messages, ParseException e) { // returns list of messages
                 if (e == null) {
                     if (mMessages != null) mMessages.clear();
-                    if (mMessages != null) mMessages.addAll(messages);
+
+                    TreeMap<Integer, Message> treeMap = new TreeMap<>(Collections.reverseOrder());
+                    int i = 1;
+                    for (Message msg : messages) {
+                        treeMap.put(i++, msg);
+                    }
+
+                    if (mMessages != null) mMessages.addAll(treeMap.values());
                     if (mAdapter != null) mAdapter.notifyDataSetChanged();
                     if (recyclerView != null) recyclerView.invalidate();
                 } else {
-                    Log.d("message", "Error: " + e.getMessage());
+                    Log.e("GroupChat", "Get messages error: " + e.getMessage());
                 }
             }
         });
     }
 
-    // Defines a runnable which is run every 100ms
+    // Defines a runnable which is run every 500ms
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -255,10 +265,10 @@ public class ChatActivity extends ActionBarActivity {
 
     private void refreshMessages() {
         receiveMessage();
-        if (mAdapter != null) {
-            if (initialSize < mAdapter.getItemCount()) {
-                initialSize = mAdapter.getItemCount();
-                recyclerView.smoothScrollToPosition(mAdapter.getItemCount());
+        if (mMessages != null && !mMessages.isEmpty()) {
+            if (!mMessages.get(mMessages.size()-1).getObjectId().equals(initialObjId)) {
+                initialObjId = mMessages.get(mMessages.size()-1).getObjectId();
+                recyclerView.smoothScrollToPosition(mMessages.size());
             }
         }
     }
