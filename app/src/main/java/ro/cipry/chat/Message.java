@@ -14,10 +14,6 @@ public class Message extends ParseObject {
         return getString("body");
     }
 
-    public String getUserName() {
-        return getString("username");
-    }
-
     public String getPrivateChat() {
         return getString("privateChat");
     }
@@ -28,10 +24,6 @@ public class Message extends ParseObject {
 
     public void setBody(String body) {
         put("body", body);
-    }
-
-    public void setUserName(String userName) {
-        put("username", userName);
     }
 
     public void setPrivateChat(String privateChat) {

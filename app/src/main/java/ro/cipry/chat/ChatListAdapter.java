@@ -15,10 +15,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,12 +30,14 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Messag
     private Context context;
 
     List<Message> data = Collections.emptyList();
+    List<ParseUser> users = Collections.emptyList();
 
-    public ChatListAdapter(Context context, String userId, List<Message> messages) {
+    public ChatListAdapter(Context context, String userId, List<Message> messages, List<ParseUser> users) {
         this.context = context;
         this.mUserId = userId;
         inflater = LayoutInflater.from(context);
         this.data = messages;
+        this.users = users;
     }
 
     // Create a gravatar image based on the hash value obtained from userId
@@ -60,6 +64,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Messag
     @Override
     public void onBindViewHolder(MessageHolder messageHolder, int i) {
         final Message message = data.get(i);
+        ParseUser user = new ParseUser();
+        for (ParseUser u : users) {
+            if (u.getObjectId().equals(message.getUserId())) {
+                user = u;
+            }
+        }
+
         final boolean isMe = message.getUserId().equals(mUserId);
         // Show-hide image based on the logged-in user.
         // Display the profile image to the right for our user, left for other users.
@@ -92,8 +103,8 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.Messag
                 .into(profileView);
 
         messageHolder.body.setText(message.getBody());
-        messageHolder.nameLeft.setText(message.getUserName());
-        messageHolder.nameRight.setText(message.getUserName());
+        messageHolder.nameLeft.setText(user.getString("name"));
+        messageHolder.nameRight.setText(user.getString("name"));
     }
 
     @Override

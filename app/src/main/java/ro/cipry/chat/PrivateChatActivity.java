@@ -57,6 +57,7 @@ public class PrivateChatActivity extends ActionBarActivity {
     private ParseUser currentUser;
     private String privateChatObjId = "";
     private String privateChatName = "";
+    private ArrayList<ParseUser> users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,8 +131,9 @@ public class PrivateChatActivity extends ActionBarActivity {
         recyclerView = (RecyclerView) findViewById(R.id.lvChat);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
 
-        mMessages = new ArrayList<Message>();
-        mAdapter = new ChatListAdapter(PrivateChatActivity.this, currentUser.getObjectId(), mMessages);
+        mMessages = new ArrayList<>();
+        users = new ArrayList<>();
+        mAdapter = new ChatListAdapter(PrivateChatActivity.this, currentUser.getObjectId(), mMessages, users);
 
         recyclerView.setAdapter(mAdapter);
 
@@ -148,7 +150,6 @@ public class PrivateChatActivity extends ActionBarActivity {
                     message.setUserId(currentUser.getObjectId());
                     message.setBody(body);
                     message.setPrivateChat(currentUser.getObjectId() + privateChatObjId);
-                    message.setUserName(currentUser.getString("name"));
                     message.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -202,6 +203,21 @@ public class PrivateChatActivity extends ActionBarActivity {
                     if (recyclerView != null) recyclerView.invalidate();
                 } else {
                     Log.e("PrivateChat", "Get messages error: " + e.getMessage());
+                }
+            }
+        });
+
+        ParseQuery<ParseUser> query2 = ParseUser.getQuery();
+        query2.orderByAscending("createdAt");
+        query2.findInBackground(new FindCallback<ParseUser>() {
+            public void done(List<ParseUser> u, ParseException e) {
+                if (e == null) {
+                    if (users != null) users.clear();
+                    if (users != null) users.addAll(u);
+                    if (mAdapter != null) mAdapter.notifyDataSetChanged();
+                    if (recyclerView != null) recyclerView.invalidate();
+                } else {
+                    Log.d("UsersActivity", "Get users error: " + e.getMessage());
                 }
             }
         });
@@ -339,27 +355,6 @@ public class PrivateChatActivity extends ActionBarActivity {
                     }
                 }
             });
-
-            final ArrayList<Message> mess = new ArrayList<>();
-            ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
-
-            query.orderByDescending("createdAt");
-            query.whereEqualTo("userId", currentUser.getObjectId());
-            query.findInBackground(new FindCallback<Message>() {
-                @Override
-                public void done(List<Message> messages, ParseException e) {
-                    if (e == null) {
-                        for (final Message msg : messages) {
-                            msg.setUserName(newName);
-                            mess.add(msg);
-                        }
-                    } else {
-                        Log.e("", "Error: " + e.getMessage());
-                    }
-                }
-            });
-
-            ParseObject.saveAllInBackground(mess);
 
             try {
                 currentUser = ParseUser.getCurrentUser().fetch();
