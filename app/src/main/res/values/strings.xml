@@ -17,5 +17,6 @@
     <string name="action_users">Users</string>
     <string name="title_activity_users">Users from this chat</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_private_chat">Private Chat</string>
 
 </resources>

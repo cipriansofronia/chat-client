@@ -62,7 +62,7 @@ dd
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-<!--                   IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
+                <!-- IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
                 <category android:name="ro.cipry.chat" />
             </intent-filter>
         </receiver>
@@ -86,6 +86,11 @@ dd
         <activity
             android:name=".UsersActivity"
             android:label="@string/title_activity_users" >
+        </activity>
+        <activity
+            android:name=".PrivateChatActivity"
+            android:label="@string/title_activity_private_chat"
+            android:windowSoftInputMode="adjustResize">
         </activity>
     </application>
 

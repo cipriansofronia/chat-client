@@ -1,0 +1,98 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#687586"
+    tools:context="ro.cipry.chat.PrivateChatActivity">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lvChat"
+        android:transcriptMode="alwaysScroll"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/llSend"
+        android:layout_width="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/no_messages_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center"
+        android:visibility="gone"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="@string/no_items"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/no_internet_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center"
+        android:visibility="gone"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:text="@string/no_internet"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/llSend"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:background="#515D6D"
+        android:padding="5dp"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/etMessage"
+            android:layout_toLeftOf="@+id/btSend"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@+id/btSend"
+            android:background="@drawable/background"
+            android:hint="@string/message_hint"
+            android:inputType="textShortMessage"
+            android:textColorHint="@color/abc_primary_text_material_light"
+            android:padding="5dp"
+            android:textSize="14sp"
+            android:textColor="@color/abc_primary_text_material_light"
+            android:imeOptions="actionSend"
+            android:layout_alignTop="@+id/btSend" />
+
+        <ImageButton
+            android:id="@+id/btSend"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/send"
+            android:textSize="18sp" >
+        </ImageButton>
+
+    </RelativeLayout>
+
+</RelativeLayout>

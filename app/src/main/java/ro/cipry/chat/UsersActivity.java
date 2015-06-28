@@ -1,5 +1,6 @@
 package ro.cipry.chat;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class UsersActivity extends ActionBarActivity {
+public class UsersActivity extends ActionBarActivity implements UsersAdapter.ClickListener{
 
     private RecyclerView recyclerView;
     private ArrayList<ParseUser> users = new ArrayList<>();
@@ -32,6 +34,7 @@ public class UsersActivity extends ActionBarActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
 
         adapter = new UsersAdapter(UsersActivity.this, ParseUser.getCurrentUser().getObjectId(), users);
+        adapter.setClickListener(this);
 
         recyclerView.setAdapter(adapter);
 
@@ -75,5 +78,17 @@ public class UsersActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void itemClicked(View appIcon, int position) {
+
+        ParseUser selectedUser = users.get(position);
+
+        Intent privateChatIntent = new Intent(this, PrivateChatActivity.class);
+        privateChatIntent.putExtra("privateChatObjId", selectedUser.getObjectId());
+        privateChatIntent.putExtra("privateChatName", selectedUser.getString("name"));
+        startActivity(privateChatIntent);
+
     }
 }

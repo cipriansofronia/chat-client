@@ -20,6 +20,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MessageHolde
     private String mUserId;
     private LayoutInflater inflater;
     private Context context;
+    private ClickListener clickListener;
 
     List<ParseUser> users = Collections.emptyList();
 
@@ -62,7 +63,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MessageHolde
                 .transform(new CircleTransform())
                 .into(profileView);
 
-        holder.nameLeft.setText(user.getString("name"));
+        if (ParseUser.getCurrentUser().getObjectId().equals(user.getObjectId())) {
+            holder.nameLeft.setText(user.getString("name") + " (me)");
+        } else {
+            holder.nameLeft.setText(user.getString("name"));
+        }
     }
 
     @Override
@@ -70,16 +75,33 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.MessageHolde
         return users.size();
     }
 
-    public static class MessageHolder extends RecyclerView.ViewHolder {
+    public class MessageHolder extends RecyclerView.ViewHolder {
 
         private ImageView imgLeft;
         private TextView nameLeft;
 
-        public MessageHolder(View itemView) {
+        public MessageHolder(final View itemView) {
             super(itemView);
             imgLeft = (ImageView) itemView.findViewById(R.id.ivImgLeft);
             nameLeft = (TextView) itemView.findViewById(R.id.name);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if(clickListener != null){
+                        clickListener.itemClicked(itemView, getPosition());
+                    }
+                }
+            });
         }
+    }
+
+    public void setClickListener(ClickListener clickListener){
+        this.clickListener = clickListener;
+    }
+
+    public interface ClickListener {
+        public void itemClicked(View appIcon, int position);
     }
 
 }
