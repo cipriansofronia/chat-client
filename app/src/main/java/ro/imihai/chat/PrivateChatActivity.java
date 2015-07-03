@@ -1,4 +1,4 @@
-package ro.cipry.chat;
+package ro.imihai.chat;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;

@@ -1,4 +1,4 @@
-package ro.cipry.chat;
+package ro.imihai.chat;
 
 import android.app.Application;
 
@@ -23,9 +23,5 @@ public class ChatApplication extends Application {
         // Save the current Installation to Parse
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
-        // Test creation of object
-        /*ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();*/
     }
 }

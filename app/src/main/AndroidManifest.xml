@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ro.cipry.chat" >
+    package="ro.imihai.chat" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,10 +15,10 @@
       to match your app's package name + ".permission.C2D_MESSAGE".
     -->
     <permission
-        android:name="ro.cipry.chat.permission.C2D_MESSAGE"
+        android:name="ro.imihai.chat.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="ro.cipry.chat.permission.C2D_MESSAGE" />
+    <uses-permission android:name="ro.imihai.chat.permission.C2D_MESSAGE" />
 
     <application
         android:name=".ChatApplication"
@@ -48,7 +48,7 @@
         <receiver
             android:name="com.parse.ParsePushBroadcastReceiver"
             android:exported="false" >
-dd
+
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
                 <action android:name="com.parse.push.intent.DELETE" />
@@ -63,7 +63,7 @@ dd
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
                 <!-- IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
-                <category android:name="ro.cipry.chat" />
+                <category android:name="ro.imihai.chat" />
             </intent-filter>
         </receiver>
 

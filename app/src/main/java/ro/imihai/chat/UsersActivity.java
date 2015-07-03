@@ -1,4 +1,4 @@
-package ro.cipry.chat;
+package ro.imihai.chat;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;

@@ -1,4 +1,4 @@
-package ro.cipry.chat;
+package ro.imihai.chat;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;

@@ -2,13 +2,6 @@
 <items version="2" >
 
     <item
-        jar="/media/windows/workspace/chat-client/app/libs/Parse-1.9.2.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="fe739334780fe321141e62720822c2d456061899">
-        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/Parse-1.9.2-64d6d46ee5815823904894fe0ab8d93e88a15388.jar" />
-    </item>
-    <item
         jar="/home/cipry/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.0/7ff0e000d1e27e356567f56c92af3b8ab912636f/picasso-2.5.0.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -51,6 +44,13 @@
         <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-a6070e5a1d9fb9415a793bbb22b1aa4632bc30e2.jar" />
     </item>
     <item
+        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/chat-client/ParseLoginUI/unspecified/libs/Parse-1.9.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="fe739334780fe321141e62720822c2d456061899">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/Parse-1.9.2-b6e0620258459734f6dedb937984da1ecd4687ab.jar" />
+    </item>
+    <item
         jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -58,18 +58,18 @@
         <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-fb9906b7a9a2d6813cc5edc90b8170cd5e0ca7f9.jar" />
     </item>
     <item
+        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/chat-client/ParseLoginUI/unspecified/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7fb7c00d608c07c8cd41421b581e886f44ff54bc">
+        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-a4e2837286876b3430f741b5a1700ad99151ab01.jar" />
+    </item>
+    <item
         jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/chat-client/ParseLoginUI/unspecified/libs/ParseFacebookUtilsV4-1.9.1.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="f78e5603a5ecac14eaa34a763c9165444a681193">
         <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/ParseFacebookUtilsV4-1.9.1-e33be445af033e178ce579667c4e4e96ed02ef80.jar" />
-    </item>
-    <item
-        jar="/media/windows/workspace/chat-client/app/build/intermediates/exploded-aar/chat-client/ParseLoginUI/unspecified/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="3a96823996e5959876aa16765d8fe80e2049f794">
-        <dex dex="/media/windows/workspace/chat-client/app/build/intermediates/pre-dexed/debug/classes-a4e2837286876b3430f741b5a1700ad99151ab01.jar" />
     </item>
     <item
         jar="/home/cipry/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"

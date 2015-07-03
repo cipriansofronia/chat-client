@@ -3,8 +3,8 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:background="#687586"
-    tools:context="ro.cipry.chat.UsersActivity">
+    android:background="@drawable/chat_bg"
+    tools:context="ro.imihai.chat.UsersActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chatLayout"
